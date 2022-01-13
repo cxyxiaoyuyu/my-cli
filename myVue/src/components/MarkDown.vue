@@ -1,0 +1,24 @@
+<template>
+  <article class="markdown-body" v-html="content"></article>
+</template>
+
+<script lang="ts">
+import { ref } from "vue";
+export default {
+  props: {
+    path: {
+      type: String,
+      required: true,
+    },
+  },
+  setup(props:any) {
+    const content = ref<string>('');
+    import(/* @vite-ignore */props.path).then((result) => {
+      content.value = result.default;
+    });
+    return {
+      content,
+    };
+  },
+};
+</script>
